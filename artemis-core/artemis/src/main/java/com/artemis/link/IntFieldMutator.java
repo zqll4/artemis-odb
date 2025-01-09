@@ -9,7 +9,7 @@ class IntFieldMutator implements UniFieldMutator {
 	@Override
 	public int read(Component c, Field f) {
 		try {
-			return (Integer) f.get(c);
+			return (int) f.get(c);
 		} catch (ReflectionException e) {
 			throw new RuntimeException(e);
 		}

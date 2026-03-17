@@ -17,7 +17,7 @@ class ClassMethodTransplantVisitor extends ClassVisitor {
 	private List<MethodDescriptor> methods = new ArrayList<MethodDescriptor>();
 
 	public ClassMethodTransplantVisitor(ClassReader source, ClassVisitor target, ClassMetadata meta) {
-		super(Opcodes.ASM5);
+		super(Opcodes.ASM9);
 		this.target = target;
 		this.meta = meta;
 		this.source = source;

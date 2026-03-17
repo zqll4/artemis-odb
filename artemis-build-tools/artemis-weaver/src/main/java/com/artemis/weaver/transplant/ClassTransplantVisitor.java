@@ -13,7 +13,7 @@ public class ClassTransplantVisitor extends ClassVisitor {
 	                              ClassMetadata meta,
 	                              String name) {
 
-		super(Opcodes.ASM5, target);
+		super(Opcodes.ASM9, target);
 		this.source = source;
 		this.meta = meta;
 		this.name = name;

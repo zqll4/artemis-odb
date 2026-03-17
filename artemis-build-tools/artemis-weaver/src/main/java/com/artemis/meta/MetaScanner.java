@@ -23,9 +23,9 @@ import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.InsnNode;
 
 public class MetaScanner extends ClassVisitor implements Opcodes {
-	
+
 	private static final class AnnotationReader extends AnnotationVisitor {
-		
+
 		private ClassMetadata info;
 
 		private AnnotationReader(AnnotationVisitor av, ClassMetadata meta) {
@@ -51,23 +51,23 @@ public class MetaScanner extends ClassVisitor implements Opcodes {
 
 	@Override
 	public void visit(int version,
-	                  int access,
-	                  String name,
-	                  String signature,
-	                  String superName,
-	                  String[] interfaces) {
+					  int access,
+					  String name,
+					  String signature,
+					  String superName,
+					  String[] interfaces) {
 
 		info.superClass = superName;
 		if (EntitySystemType.resolve(info) != null)
 			info.sysetemOptimizable = OptimizationType.FULL;
-		
+
 		super.visit(version, access, name, signature, superName, interfaces);
 	}
-	
+
 	@Override
 	public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
 		AnnotationVisitor av = super.visitAnnotation(desc, visible);
-		
+
 		if (POOLED_ANNOTATION.equals(desc)) {
 			info.annotation = WeaverType.POOLED;
 			av = new AnnotationReader(av, info);
@@ -77,19 +77,19 @@ public class MetaScanner extends ClassVisitor implements Opcodes {
 			info.isPreviouslyProcessed = true;
 		} else if (info.sysetemOptimizable == OptimizationType.FULL
 				&& Weaver.PRESERVE_VISIBILITY_ANNOTATION.equals(desc)) {
-			
+
 			info.sysetemOptimizable = OptimizationType.SAFE;
 		}
-		
+
 		return av;
 	}
-	
+
 	@Override
 	public FieldVisitor visitField(int access,
-	                               String name,
-	                               String desc,
-	                               String signature,
-	                               Object value) {
+								   String name,
+								   String desc,
+								   String signature,
+								   Object value) {
 
 		final FieldDescriptor field = info.field(name);
 		field.set(access, desc, signature, value);
@@ -111,13 +111,13 @@ public class MetaScanner extends ClassVisitor implements Opcodes {
 
 		return fv;
 	}
-	
+
 	@Override
 	public MethodVisitor visitMethod(int access,
-	                                 String name,
-	                                 String desc,
-	                                 String signature,
-	                                 String[] exceptions) {
+									 String name,
+									 String desc,
+									 String signature,
+									 String[] exceptions) {
 
 		MethodVisitor mv = super.visitMethod(access, name, desc, signature, exceptions);
 
@@ -140,7 +140,7 @@ public class MetaScanner extends ClassVisitor implements Opcodes {
 
 	private static AbstractInsnNode constInstructionFor(FieldDescriptor field) {
 		if ("Ljava/lang/String;".equals(field.desc))
-				return new InsnNode(ACONST_NULL);
+			return new InsnNode(ACONST_NULL);
 
 		switch (field.desc.charAt(0)) {
 			case 'Z':
@@ -165,10 +165,10 @@ public class MetaScanner extends ClassVisitor implements Opcodes {
 		private final Class<?> mutatorClass;
 
 		public EntityIdScanVisitor(FieldVisitor fv,
-		                           FieldDescriptor field,
-		                           Class<?> mutatorClassIfFound) {
+								   FieldDescriptor field,
+								   Class<?> mutatorClassIfFound) {
 
-			super(Opcodes.ASM5, fv);
+			super(Opcodes.ASM9, fv);
 			this.field = field;
 			this.mutatorClass = mutatorClassIfFound;
 		}

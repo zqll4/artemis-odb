@@ -10,7 +10,7 @@ final class ProfileAnnotationReader extends AnnotationVisitor {
 	private ClassMetadata info;
 
 	ProfileAnnotationReader(String name, ClassMetadata info) {
-		super(Opcodes.ASM4);
+		super(Opcodes.ASM9);
 		this.annotationField = name;
 		this.info = info;
 	}
@@ -21,10 +21,10 @@ final class ProfileAnnotationReader extends AnnotationVisitor {
 			info.profilerClass = (Type)value;
 		else if ("enabled".equals(field))
 			info.profilingEnabled = (Boolean)value;
-		
+
 		super.visit(annotationField, value);
 	}
-	
+
 	@Override
 	public AnnotationVisitor visitArray(final String name) {
 		return new ProfileAnnotationReader(name, info);

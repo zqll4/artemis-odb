@@ -12,21 +12,21 @@ public class MethodBodyTransplanter extends MethodVisitor {
 	private final Type type;
 
 	public MethodBodyTransplanter(String oldOwner, ClassMetadata meta, MethodVisitor mv) {
-		super(Opcodes.ASM5, mv);
+		super(Opcodes.ASM9, mv);
 		this.oldOwner = Type.getObjectType(oldOwner);
 		type = meta.type;
 		this.owner = meta.type.getInternalName();
 	}
 
 	public MethodBodyTransplanter(Class<?> oldOwner, Type newType, MethodVisitor mv) {
-		super(Opcodes.ASM5, mv);
+		super(Opcodes.ASM9, mv);
 		this.oldOwner = Type.getType(oldOwner);
 		this.type = newType;
 		this.owner = newType.getInternalName();
 	}
 
 	public MethodBodyTransplanter(String oldOwner, Type newType, MethodVisitor mv) {
-		super(Opcodes.ASM5, mv);
+		super(Opcodes.ASM9, mv);
 		this.oldOwner = Type.getObjectType(oldOwner);
 		this.type = newType;
 		this.owner = newType.getInternalName();

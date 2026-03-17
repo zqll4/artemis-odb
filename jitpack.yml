@@ -1,0 +1,5 @@
+jdk:
+  - openjdk21
+install:
+  # 把 ./mvnw 改成 mvn 即可
+  - mvn install -DskipTests -Dmaven.javadoc.skip=true -DfailIfNoTests=false
